@@ -60,7 +60,7 @@ build/
 BUILD_INFO_FILE = "build-info"
 REQUIREMENTS_PLIST = "product-requirements.plist"
 BOM_TEXT_FILE = "Bom.txt"
-CUTOM_BUILD_INFO_FILE = os.path.expanduser('~/.munkipkg.json')
+CUSTOM_BUILD_INFO_FILE = os.path.expanduser('~/.munkipkg.json')
 
 class MunkiPkgError(Exception):
     '''Base Exception for errors in this domain'''
@@ -217,12 +217,12 @@ def read_custom_build_info():
     '''Reads custom build_info'''
     custom_build_info = {}
     try:
-        if os.path.exists(CUTOM_BUILD_INFO_FILE):
-            with open(CUTOM_BUILD_INFO_FILE, 'r') as openfile:
+        if os.path.exists(CUSTOM_BUILD_INFO_FILE):
+            with open(CUSTOM_BUILD_INFO_FILE, 'r') as openfile:
                 custom_build_info = json.load(openfile)
     except (ValueError) as err:
         raise BuildError("%s is not a valid json file: %s"
-                         % (CUTOM_BUILD_INFO_FILE, str(err)))
+                         % (CUSTOM_BUILD_INFO_FILE, str(err)))
     return custom_build_info
 
 
