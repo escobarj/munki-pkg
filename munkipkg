@@ -272,18 +272,19 @@ def get_build_info(project_dir, options):
     if file_type and os.path.exists(build_file + '.' + file_type):
         file_info = read_build_info(build_file + '.' + file_type)
 
+    if options.pkg_version:
+        file_info['version'] = options.pkg_version
+        basename = '-'.join(file_info['name'].split('-')[:-1])
+        name = basename + '-' + options.pkg_version + '.pkg'
+        file_info['name'] = name
+
     if file_info:
         for key in supported_keys:
             if key in file_info:
+                print(key, file_info[key])
                 info[key] = file_info[key]
     else:
         raise MunkiPkgError('ERROR: No build-info file found!')
-
-    if options.pkg_version:
-        info['version'] = options.pkg_version
-        basename = '-'.join(info['name'].split('-')[:-1])
-        name = basename + '-' + options.pkg_version + '.pkg'
-        info['name'] = name
 
     return info
 
