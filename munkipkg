@@ -60,6 +60,7 @@ build/
 BUILD_INFO_FILE = "build-info"
 REQUIREMENTS_PLIST = "product-requirements.plist"
 BOM_TEXT_FILE = "Bom.txt"
+CUTOM_BUILD_INFO_FILE = os.path.expanduser('~/.munkipkg.json')
 
 class MunkiPkgError(Exception):
     '''Base Exception for errors in this domain'''
@@ -212,6 +213,19 @@ def make_pkginfo(build_info, options):
         raise BuildError('Couldn\'t create PackageInfo file: %s' % err)
 
 
+def read_custom_build_info():
+    '''Reads custom build_info'''
+    custom_build_info = {}
+    try:
+        if os.path.exists(CUTOM_BUILD_INFO_FILE):
+            with open(CUTOM_BUILD_INFO_FILE, 'r') as openfile:
+                custom_build_info = json.load(openfile)
+    except (ValueError) as err:
+        raise BuildError("%s is not a valid json file: %s"
+                         % (CUTOM_BUILD_INFO_FILE, str(err)))
+    return custom_build_info
+
+
 def default_build_info(project_dir):
     '''Return dict with default build info values'''
     info = {}
@@ -225,6 +239,8 @@ def default_build_info(project_dir):
     info['install_location'] = '/'
     info['version'] = "1.0"
     info['distribution_style'] = False
+    custom_info = read_custom_build_info()
+    info.update(custom_info)
     return info
 
 

@@ -136,6 +136,24 @@ If both build-info.plist and build-info.yaml are present, the plist file will be
 
 Note in the JSON and YAML examples that the version "number" is wrapped in quotes. This is important -- XML plists have explict type tags and the correct type for a version "number" is `string`. JSON and YAML infer a value's type based on formatting. Without quotes wrapping the value, `1.0` would be interpreted as a floating point number, and not a string, potentially causing an error at build time. This issue might affect future build-info keys supported by `munkipkg`, so take care.
 
+#### overwriting the default build-info keys
+
+The default build-info keys can be modified or added to by creating a custom build-info file at `~/.munkipkg.json`.
+
+```json
+{
+    "distribution_style": true,
+    "identifier": "com.myname.pkg.Foo",
+    "signing_info": {
+        "identity": "Signing Identity Common Name",
+        "keychain": "/path/to/SpecialKeychain",
+        "additional_cert_names": ["Intermediate CA Common Name 1",
+                                  "Intermediate CA Common Name 2"],
+        "timestamp": true
+    }
+}
+```
+
 #### build-info keys
 
 **distribution_style**  
