@@ -272,6 +272,9 @@ def get_build_info(project_dir, options):
     if file_type and os.path.exists(build_file + '.' + file_type):
         file_info = read_build_info(build_file + '.' + file_type)
 
+    if options.pkg_version:
+        file_info['version'] = options.pkg_version
+
     if file_info:
         for key in supported_keys:
             if key in file_info:
@@ -1007,6 +1010,9 @@ def main():
     parser.add_option('--yaml', action='store_true',
                       help='Create build-info file in YAML format. '
                            'Useful only with --create and --import options.')
+    parser.add_option('--pkg-version',
+                      help='Overwrite the package version specified in the build-info file.  '
+                           'Useful for build scripts.')
     parser.add_option('--export-bom-info', action='store_true',
                       help='Extracts the Bill-Of-Materials file from the '
                            'output package and exports it as Bom.txt under the '

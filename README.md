@@ -279,6 +279,9 @@ See the **SIGNED PACKAGES** section of the man page for `pkgbuild` or the **SIGN
 `--create`  
 Creates a new empty template package project. See [**Creating a new project**](#creating-a-new-project).
 
+`--pkg-version`  
+Overwrite the package version specified in the build-info file. This option is useful for builds scripts that need to specify a package version at run time.
+
 `--import`  
 `munkipkg --import /path/to/flat.pkg /path/to/project_dir`
 
