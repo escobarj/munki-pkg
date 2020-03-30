@@ -214,7 +214,7 @@ def make_pkginfo(build_info, options):
 
 
 def read_custom_build_info():
-    '''Reads custom build_info'''
+    '''Reads custom build-info from ~/.munkipkg.json'''
     custom_build_info = {}
     try:
         if os.path.exists(CUSTOM_BUILD_INFO_FILE):
